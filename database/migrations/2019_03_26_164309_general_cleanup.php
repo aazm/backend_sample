@@ -83,6 +83,18 @@ class GeneralCleanup extends Migration
         Schema::table('customer', function (\Illuminate\Database\Schema\Blueprint $table){
             $table->string('password')->change();
         });
+        Schema::table('orders', function (\Illuminate\Database\Schema\Blueprint $table){
+            $table->foreign('shipping_id')->references('shipping_id')->on('shipping');
+            $table->foreign('customer_id')->references('customer_id')->on('customer');
+            $table->foreign('tax_id')->references('tax_id')->on('tax');
+        });
+        Schema::table('order_detail', function (\Illuminate\Database\Schema\Blueprint $table){
+            $table->foreign('order_id')->references('order_id')->on('orders');
+            $table->foreign('product_id')->references('product_id')->on('product');
+        });
+
+
+
 
 
     }
