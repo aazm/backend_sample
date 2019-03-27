@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Turing\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
