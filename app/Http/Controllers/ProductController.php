@@ -2,6 +2,7 @@
 
 namespace Turing\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Turing\Helpers\EmptyDataSet;
@@ -31,4 +32,26 @@ class ProductController extends Controller
 
         }
     }
+
+    public function show($id)
+    {
+        try {
+
+            return response()->json([
+                'success' => true,
+                'product' => resolve(ProductServiceInterface::class)->getById($id)
+            ]);
+
+        } catch (ModelNotFoundException $e) {
+
+            return response()->json(['success' => false], 404);
+
+        } catch (\Exception $e) {
+
+            Log::error('Product show', ['e' => $e]);
+            return response(['success' => false], 500);
+
+        }
+    }
+
 }

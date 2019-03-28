@@ -8,5 +8,5 @@
 
 return [
     'items_per_page' => 10,
-    'cache_ttl' => 10,
+    'cache_ttl' => 60,
 ];

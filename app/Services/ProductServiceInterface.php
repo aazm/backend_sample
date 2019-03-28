@@ -8,6 +8,7 @@
 
 namespace Turing\Services;
 
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Turing\Helpers\DataSet;
 
@@ -15,7 +16,7 @@ interface ProductServiceInterface
 {
     public function search(array $criteria, int $offset = 0): DataSet;
 
-    public function getById($id);
+    public function getById($id): Model;
 
     public function getCategories(): Collection;
 

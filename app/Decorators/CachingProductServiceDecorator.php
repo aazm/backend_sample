@@ -8,7 +8,10 @@
 
 namespace Turing\Decorators;
 
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Log;
 use Turing\Helpers\DataSet;
 use Turing\Services\Impl\ProductService;
 use Turing\Services\ProductServiceInterface;
@@ -31,14 +34,26 @@ class CachingProductServiceDecorator implements ProductServiceInterface
         });
     }
 
-    public function getById($id)
+    public function getById($id): Model
     {
-        $key = $this->getKey(__FUNCTION__, compact('id'));
+        $key = $this->getKey(__FUNCTION__, ['id' => $id]);
 
-        return cache()->remember($key, config('turing.cache_ttl'), function () use ($id) {
-            return $this->service->getById($id);
+        $model = cache()->remember($key, config('turing.cache_ttl'), function () use ($id) {
+
+            try {
+
+                return $this->service->getById($id);
+
+            } catch (ModelNotFoundException $e) {
+                return false;
+            }
         });
 
+        if(!$model) {
+            throw new ModelNotFoundException();
+        }
+
+        return $model;
     }
 
     public function getCategories(): Collection
@@ -61,7 +76,9 @@ class CachingProductServiceDecorator implements ProductServiceInterface
 
     private function getKey($prefix, array $dt)
     {
-        return sprintf('%s:%s:%s',get_class($this), $prefix, $this->normalize($dt));
+        $key = sprintf('%s:%s:%s',get_class($this), $prefix, $this->normalize($dt));
+        Log::info($key);
+        return $key;
     }
 
 
