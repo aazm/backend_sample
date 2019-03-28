@@ -3,6 +3,9 @@
 namespace Turing\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Turing\Decorators\CachingProductServiceDecorator;
+use Turing\Services\Impl\ProductService;
+use Turing\Services\ProductServiceInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->bind(ProductServiceInterface::class, function($app) {
+            return new ProductService();
+//            return new CachingProductServiceDecorator(new ProductService());
+        });
     }
 
     /**

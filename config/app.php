@@ -173,6 +173,7 @@ return [
         Turing\Providers\AuthServiceProvider::class,
         // Turing\Providers\BroadcastServiceProvider::class,
         Turing\Providers\EventServiceProvider::class,
+        Turing\Providers\TelescopeServiceProvider::class,
         Turing\Providers\RouteServiceProvider::class,
 
     ],
