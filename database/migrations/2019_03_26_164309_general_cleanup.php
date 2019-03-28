@@ -93,7 +93,12 @@ class GeneralCleanup extends Migration
             $table->foreign('product_id')->references('product_id')->on('product');
         });
 
+        DB::statement('ALTER TABLE product DROP INDEX idx_ft_product_name_description');
 
+        Schema::table('product', function (\Illuminate\Database\Schema\Blueprint $table){
+            $table->index('name');
+            $table->index('description');
+        });
 
 
 
