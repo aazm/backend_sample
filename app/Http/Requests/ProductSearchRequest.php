@@ -3,6 +3,8 @@
 namespace Turing\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Turing\Rules\CategoryRule;
+use Turing\Rules\DepartmentRule;
 
 class ProductSearchRequest extends FormRequest
 {
@@ -25,12 +27,11 @@ class ProductSearchRequest extends FormRequest
     {
         return [
             'criteria' => 'array',
+            'criteria.department' => ['numeric', new DepartmentRule()],
+            'criteria.category' => ['numeric', new CategoryRule($this)],
 
-            'criteria.department' => 'numeric',
-            'criteria.category' => 'numeric',
             'criteria.name' => 'string',
             'criteria.description' => 'string',
-
             'offset' => 'numeric'
         ];
     }

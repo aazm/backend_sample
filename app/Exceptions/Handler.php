@@ -4,6 +4,7 @@ namespace Turing\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +47,18 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
-        return parent::render($request, $exception);
+        switch (true) {
+
+            case $exception instanceof ValidationException:
+                return response()->json([
+                    'success' => false,
+                    'errors' => $exception->errors()
+                ], 400);
+
+
+            default:
+                return parent::render($request, $exception);
+        }
+
     }
 }

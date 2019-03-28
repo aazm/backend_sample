@@ -17,12 +17,20 @@ class DataSet
     /** @var  Collection */
     private $items;
 
+    /**
+     * @param int $total
+     * @return $this
+     */
     public function setTotal(int $total)
     {
         $this->total = $total;
         return $this;
     }
 
+    /**
+     * @param Collection $items
+     * @return $this
+     */
     public function setItems(Collection $items)
     {
         $this->items = $items;

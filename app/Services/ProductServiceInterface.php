@@ -8,6 +8,7 @@
 
 namespace Turing\Services;
 
+use Illuminate\Support\Collection;
 use Turing\Helpers\DataSet;
 
 interface ProductServiceInterface
@@ -15,4 +16,10 @@ interface ProductServiceInterface
     public function search(array $criteria, int $offset = 0): DataSet;
 
     public function getById($id);
+
+    public function getCategories(): Collection;
+
+    public function getDepartments(): Collection;
+
+
 }

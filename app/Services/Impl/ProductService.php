@@ -8,8 +8,11 @@
 
 namespace Turing\Services\Impl;
 
+use Illuminate\Support\Collection;
 use Turing\Helpers\DataSet;
 use Turing\Helpers\EmptyDataSet;
+use Turing\Models\Category;
+use Turing\Models\Department;
 use Turing\Models\Product;
 use Turing\Services\ProductServiceInterface;
 
@@ -77,6 +80,16 @@ class ProductService implements ProductServiceInterface
     {
         return Product::with('categories')
             ->first();
+    }
+
+    public function getCategories(): Collection
+    {
+        return Category::all();
+    }
+
+    public function getDepartments(): Collection
+    {
+        return Department::all();
     }
 }
 

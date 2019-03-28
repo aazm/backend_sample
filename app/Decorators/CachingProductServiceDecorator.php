@@ -8,6 +8,7 @@
 
 namespace Turing\Decorators;
 
+use Illuminate\Support\Collection;
 use Turing\Helpers\DataSet;
 use Turing\Services\Impl\ProductService;
 use Turing\Services\ProductServiceInterface;
@@ -38,6 +39,24 @@ class CachingProductServiceDecorator implements ProductServiceInterface
             return $this->service->getById($id);
         });
 
+    }
+
+    public function getCategories(): Collection
+    {
+        $key = $this->getKey(__FUNCTION__, []);
+
+        return cache()->remember($key, config('turing.cache_ttl'), function () {
+            return $this->service->getCategories();
+        });
+    }
+
+    public function getDepartments(): Collection
+    {
+        $key = $this->getKey(__FUNCTION__, []);
+
+        return cache()->remember($key, config('turing.cache_ttl'), function () {
+            return $this->service->getDepartments();
+        });
     }
 
     private function getKey($prefix, array $dt)
