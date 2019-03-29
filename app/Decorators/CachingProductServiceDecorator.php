@@ -8,11 +8,11 @@
 
 namespace Turing\Decorators;
 
-use Illuminate\Database\Eloquent\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use Turing\Helpers\DataSet;
+use Turing\Models\Product;
 use Turing\Services\Impl\ProductService;
 use Turing\Services\ProductServiceInterface;
 
@@ -71,6 +71,15 @@ class CachingProductServiceDecorator implements ProductServiceInterface
 
         return cache()->remember($key, config('turing.cache_ttl'), function () {
             return $this->service->getDepartments();
+        });
+    }
+
+    public function getAvailableIds(): Collection
+    {
+        $key = $this->getKey(__FUNCTION__, []);
+
+        return cache()->remember($key, config('turing.cache_ttl'), function () {
+            return $this->service->getAvailableIds();
         });
     }
 

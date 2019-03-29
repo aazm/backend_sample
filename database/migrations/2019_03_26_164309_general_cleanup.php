@@ -73,7 +73,6 @@ class GeneralCleanup extends Migration
         });
 
         Schema::table('shopping_cart', function (\Illuminate\Database\Schema\Blueprint $table){
-            $table->unique(['cart_id', 'product_id']);
             $table->integer('customer_id'); // customer is missing in table, card_id have no sense in that case. but will keep it
 
             $table->foreign('product_id')->references('product_id')->on('product');

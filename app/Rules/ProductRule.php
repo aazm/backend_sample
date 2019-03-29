@@ -3,13 +3,11 @@
 namespace Turing\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
-use Turing\Models\Department;
+use Turing\Services\ProductServiceInterface;
 
-class DepartmentRule implements Rule
+class ProductRule implements Rule
 {
-    /**
-     * @var mixed
-     */
+
     private $map;
 
     /**
@@ -19,13 +17,10 @@ class DepartmentRule implements Rule
      */
     public function __construct()
     {
-        $this->map = cache()->remember('department:ids', config('turing.cache_ttl'), function(){
-            return \Turing\Models\Department::select('department_id')
-                ->get()
-                ->pluck('department_id')
-                ->flip()
-                ->toArray();
-        });
+        $this->map = resolve(ProductServiceInterface::class)
+            ->getAvailableIds()
+            ->pluck('product_id')
+            ->flip();
     }
 
     /**
@@ -47,6 +42,6 @@ class DepartmentRule implements Rule
      */
     public function message()
     {
-        return 'Department does not exists';
+        return 'Product does not exist.';
     }
 }

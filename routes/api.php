@@ -35,3 +35,8 @@ Route::group(['prefix' => 'customer', 'middleware' => 'jwt.auth'], function(){
     Route::put('/', 'CustomerController@update');
     Route::get('/', 'CustomerController@show');
 });
+
+Route::group(['prefix' => 'cart', 'middleware' => 'jwt.auth'], function(){
+    Route::put('/', 'ShoppingCartController@addProduct');
+});
+

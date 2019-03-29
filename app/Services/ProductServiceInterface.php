@@ -8,7 +8,7 @@
 
 namespace Turing\Services;
 
-use Illuminate\Database\Eloquent\Product;
+use Turing\Models\Product;
 use Illuminate\Support\Collection;
 use Turing\Helpers\DataSet;
 

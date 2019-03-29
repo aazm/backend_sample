@@ -18,6 +18,10 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+
+        'Turing\Events\ShoppingCart\BuyNowProductAdded' => [
+            'Turing\Listeners\ShoppingCart\BuyNowProductAddedNotifyLog',
+        ]
     ];
 
     /**

@@ -7,7 +7,9 @@ use Turing\Decorators\CachingProductServiceDecorator;
 use Turing\Services\CustomerServiceInterface;
 use Turing\Services\Impl\CustomerService;
 use Turing\Services\Impl\ProductService;
+use Turing\Services\Impl\ShoppingCartService;
 use Turing\Services\ProductServiceInterface;
+use Turing\Services\ShoppingCartServiceInterface;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -21,6 +23,7 @@ class AppServiceProvider extends ServiceProvider
 
         $this->app->bind(ProductServiceInterface::class, ProductService::class);
         $this->app->bind(CustomerServiceInterface::class, CustomerService::class);
+        $this->app->bind(ShoppingCartServiceInterface::class, ShoppingCartService::class);
 
 
         $this->app->extend(ProductServiceInterface::class, function($service){
