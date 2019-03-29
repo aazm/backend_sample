@@ -17,8 +17,7 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->bind(ProductServiceInterface::class, function($app) {
-            return new ProductService();
-//            return new CachingProductServiceDecorator(new ProductService());
+            return new CachingProductServiceDecorator(new ProductService());
         });
     }
 
