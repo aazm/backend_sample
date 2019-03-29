@@ -25,7 +25,7 @@ class ProductController extends Controller
 
             return response()->json(array_merge(['success' => true], $dataSet->toArray()));
 
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
 
             Log::error('Product search', ['e' => $e]);
             return response(['success' => false], 500);
@@ -46,7 +46,7 @@ class ProductController extends Controller
 
             return response()->json(['success' => false], 404);
 
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
 
             Log::error('Product show', ['e' => $e]);
             return response(['success' => false], 500);

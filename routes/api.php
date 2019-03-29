@@ -31,7 +31,7 @@ Route::group(['prefix' => 'auth', 'middleware' => 'api'], function () {
 
 });
 
-Route::group(['prefix' => 'customer', 'middleware' => 'auth'], function(){
-    Route::post('profile', 'CustomerController@update');
-    Route::get('profile', 'CustomerController@show');
+Route::group(['prefix' => 'customer', 'middleware' => 'jwt.auth'], function(){
+    Route::put('/', 'CustomerController@update');
+    Route::get('/', 'CustomerController@show');
 });
