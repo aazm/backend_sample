@@ -8,7 +8,7 @@
 
 namespace Turing\Decorators;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Product;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
@@ -34,7 +34,7 @@ class CachingProductServiceDecorator implements ProductServiceInterface
         });
     }
 
-    public function getById($id): Model
+    public function getById($id): Product
     {
         $key = $this->getKey(__FUNCTION__, ['id' => $id]);
 

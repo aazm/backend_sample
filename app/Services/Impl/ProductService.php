@@ -8,7 +8,7 @@
 
 namespace Turing\Services\Impl;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Product;
 use Illuminate\Support\Collection;
 use Turing\Helpers\DataSet;
 use Turing\Helpers\EmptyDataSet;
@@ -77,7 +77,7 @@ class ProductService implements ProductServiceInterface
         return $builder;
     }
 
-    public function getById($id): Model
+    public function getById($id): Product
     {
         return Product::with('categories')->findOrFail($id);
     }
