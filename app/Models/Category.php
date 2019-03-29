@@ -11,7 +11,7 @@ class Category extends Model
 
     public function department()
     {
-        return $this->belongsTo(Department::class, 'category_id', 'department_id');
+        return $this->belongsTo(Department::class, 'department_id', 'department_id');
     }
 
     public function isIn(int $department_id)

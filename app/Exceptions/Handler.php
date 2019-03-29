@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Tymon\JWTAuth\Exceptions\JWTException;
 
 class Handler extends ExceptionHandler
@@ -62,6 +63,9 @@ class Handler extends ExceptionHandler
                     'success' => false,
                     'errors' => $exception->getMessage()
                 ], 400);
+
+            case $exception instanceof NotFoundHttpException:
+                return response()->json(['success' => false], 404);
 
             default:
                 Log::error('Got exception', ['e' => $exception]);

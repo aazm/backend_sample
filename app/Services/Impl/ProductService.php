@@ -23,7 +23,8 @@ class ProductService implements ProductServiceInterface
         $builder = $this->getQuery($criteria);
         $ids = $builder->get()->pluck('product_id');
 
-        if(!$ids->count()) return new EmptyDataSet();
+        if (!$ids->count()) return new EmptyDataSet();
+        if ($offset >= $ids->count()) return new EmptyDataSet();
 
         $product = new Product();
 
