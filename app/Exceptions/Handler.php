@@ -4,7 +4,9 @@ namespace Turing\Exceptions;
 
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\ValidationException;
+use Tymon\JWTAuth\Exceptions\JWTException;
 
 class Handler extends ExceptionHandler
 {
@@ -55,9 +57,17 @@ class Handler extends ExceptionHandler
                     'errors' => $exception->errors()
                 ], 400);
 
+            case $exception instanceof JWTException:
+                return response()->json([
+                    'success' => false,
+                    'errors' => $exception->getMessage()
+                ], 400);
 
             default:
-                return parent::render($request, $exception);
+                Log::error('Got exception', ['e' => $exception]);
+                return response()->json(['success' => false, 'message' => $exception->getMessage()], 500);
+//                return response()->json(['success' => false, 'message' => 'Something went wrong'], 500);
+
         }
 
     }

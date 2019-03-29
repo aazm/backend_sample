@@ -19,3 +19,19 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('products', 'ProductController@search');
 Route::get('products/{id}', 'ProductController@show');
+
+
+Route::post('registration', 'Auth\RegisterController@register');
+
+Route::group(['prefix' => 'auth', 'middleware' => 'api'], function () {
+
+    Route::post('login', 'Auth\LoginController@login');
+    Route::put('refresh', 'Auth\LoginController@refresh');
+    Route::post('logout', 'Auth\LoginController@logout');
+
+});
+
+Route::group(['prefix' => 'customer', 'middleware' => 'auth'], function(){
+    Route::post('profile', 'CustomerController@update');
+    Route::get('profile', 'CustomerController@show');
+});

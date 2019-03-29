@@ -36,7 +36,24 @@ class LoginController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest')->except('logout');
+        $this->middleware('guest')->except(['logout', 'refresh'] );
+    }
+
+    public function logout(Request $request)
+    {
+        auth()->logout();
+        return response()->json(['success' => true]);
+    }
+
+    public function refresh()
+    {
+        return response()->json([
+            'success' => true,
+            'access_token' => auth()->refresh(),
+            'token_type'   => 'bearer',
+            'expires_in'   => auth()->factory()->getTTL() * 60
+
+        ]);
     }
 
     protected function attemptLogin(Request $request)

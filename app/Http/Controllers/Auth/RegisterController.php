@@ -83,7 +83,7 @@ class RegisterController extends Controller
 
         return response()->json([
             'success' => true,
-            'token' => $guard->refresh(),
+            'access_token' => $guard->refresh(),
             'expires_in' => $guard->factory()->getTTL() * 60
         ]);
     }
