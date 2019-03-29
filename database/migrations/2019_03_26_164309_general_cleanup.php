@@ -82,6 +82,7 @@ class GeneralCleanup extends Migration
 
         Schema::table('customer', function (\Illuminate\Database\Schema\Blueprint $table){
             $table->string('password')->change();
+            $table->rememberToken();
         });
         Schema::table('orders', function (\Illuminate\Database\Schema\Blueprint $table){
             $table->foreign('shipping_id')->references('shipping_id')->on('shipping');
