@@ -7,6 +7,7 @@ use Turing\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -50,8 +51,8 @@ class RegisterController extends Controller
     {
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:customer'],
+            'password' => ['required', 'string', 'min:8'],
         ]);
     }
 
@@ -69,4 +70,22 @@ class RegisterController extends Controller
             'password' => Hash::make($data['password']),
         ]);
     }
+
+    /**
+     * blablalba
+     *
+     * @inheritdoc
+     */
+    protected function registered(Request $request, $user)
+    {
+        /** @var \Tymon\JWTAuth\JWTGuard $guard */
+        $guard = auth('api');
+
+        return response()->json([
+            'success' => true,
+            'token' => $guard->refresh(),
+            'expires_in' => $guard->factory()->getTTL() * 60
+        ]);
+    }
+
 }
