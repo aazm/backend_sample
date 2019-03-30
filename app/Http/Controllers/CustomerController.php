@@ -11,6 +11,11 @@ use Turing\Services\CustomerServiceInterface;
 class CustomerController extends Controller
 {
 
+    /**
+     * Show customer info
+     *
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show()
     {
         try {
@@ -23,10 +28,16 @@ class CustomerController extends Controller
         } catch (\Throwable $e) {
 
             Log::error('Customer show', ['e' => $e]);
-            return response(['success' => false], 500);
+            return response()->json(['success' => false], 500);
         }
     }
 
+    /**
+     * Update customer info
+     *
+     * @param CustomerProfileUpdateRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function update(CustomerProfileUpdateRequest $request)
     {
         try {
@@ -40,7 +51,7 @@ class CustomerController extends Controller
 
         } catch (\Throwable $e) {
             Log::error('Customer update', ['e' => $e]);
-            return response(['success' => false], 500);
+            return response()->json(['success' => false], 500);
 
         }
     }

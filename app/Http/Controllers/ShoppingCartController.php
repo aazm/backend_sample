@@ -11,6 +11,13 @@ use Turing\Services\ShoppingCartServiceInterface;
 
 class ShoppingCartController extends Controller
 {
+    /**
+     * Add new item in shopping cart.
+     *
+     *
+     * @param AddProductRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function addProduct(AddProductRequest $request)
     {
         try {
@@ -27,7 +34,7 @@ class ShoppingCartController extends Controller
 
         } catch (\Throwable $e) {
             Log::error('Product add', ['e' => $e]);
-            return response(['success' => false], 500);
+            return response()->json(['success' => false], 500);
 
         }
     }

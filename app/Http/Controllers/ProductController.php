@@ -11,6 +11,13 @@ use Turing\Services\ProductServiceInterface;
 
 class ProductController extends Controller
 {
+    /**
+     * Searches products in db
+     *
+     *
+     * @param ProductSearchRequest $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function search(ProductSearchRequest $request)
     {
         try {
@@ -28,11 +35,17 @@ class ProductController extends Controller
         } catch (\Throwable $e) {
 
             Log::error('Product search', ['e' => $e]);
-            return response(['success' => false], 500);
+            return response()->json(['success' => false], 500);
 
         }
     }
 
+    /**
+     * Show product by given id
+     *
+     * @param $id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function show($id)
     {
         try {
@@ -49,7 +62,7 @@ class ProductController extends Controller
         } catch (\Throwable $e) {
 
             Log::error('Product show', ['e' => $e]);
-            return response(['success' => false], 500);
+            return response()->json(['success' => false], 500);
 
         }
     }
