@@ -18,6 +18,9 @@ use Turing\User;
 
 class ShoppingCartService implements ShoppingCartServiceInterface
 {
+    /**
+     * @inheritdoc
+     */
     public function updateCart(User $user, Product $product, array $params): ShoppingCart
     {
         try {

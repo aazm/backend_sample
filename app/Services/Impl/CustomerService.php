@@ -15,6 +15,9 @@ use Turing\User;
 
 class CustomerService implements CustomerServiceInterface
 {
+    /**
+     * @inheritdoc
+     */
     public function getById(int $id): User
     {
         return User::findOrFail($id);

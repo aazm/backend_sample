@@ -18,6 +18,9 @@ use Turing\Services\ProductServiceInterface;
 
 class ProductService implements ProductServiceInterface
 {
+    /**
+     * @inheritdoc
+     */
     public function search(array $criteria, int $offset = 0): DataSet
     {
         $builder = $this->getQuery($criteria);
@@ -77,21 +80,33 @@ class ProductService implements ProductServiceInterface
         return $builder;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getById($id): Product
     {
         return Product::with('categories')->findOrFail($id);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getAvailableIds(): Collection
     {
         return Product::select('product_id')->get();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getCategories(): Collection
     {
         return Category::all();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getDepartments(): Collection
     {
         return Department::all();
