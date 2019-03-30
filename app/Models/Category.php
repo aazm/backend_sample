@@ -4,6 +4,14 @@ namespace Turing\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Class Category
+ * @package Turing\Models
+ * @property  int $category_id
+ * @property string $name
+ * @property \Turing\Models\Department $department
+ *
+ */
 class Category extends Model
 {
     protected $table = 'category';
