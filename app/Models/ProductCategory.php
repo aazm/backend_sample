@@ -16,6 +16,8 @@ class ProductCategory extends Model
 {
     use HasCompositePrimaryKey;
 
+    public $timestamps = false;
+
     protected $table = 'product_category';
     protected $primaryKey = ['product_id', 'category_id'];
 }

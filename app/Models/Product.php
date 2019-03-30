@@ -23,6 +23,8 @@ use Turing\ProductCategory;
  */
 class Product extends Model
 {
+    public $timestamps = false;
+
     protected $table = 'product';
     protected $primaryKey = 'product_id';
 
