@@ -17,5 +17,4 @@ interface ShoppingCartServiceInterface
 {
     public function updateCart(User $user, Product $product, array $params): ShoppingCart;
 
-    public function processPayedCard(string $card): bool;
 }

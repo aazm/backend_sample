@@ -5,6 +5,7 @@ namespace Turing;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Turing\Models\ShoppingCart;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -66,4 +67,16 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    public function shoppingCarts()
+    {
+        return $this->hasMany(ShoppingCart::class, 'customer_id', 'customer_id');
+    }
+
+    public function delete()
+    {
+        $this->shoppingCarts()->delete();
+        parent::delete();
+    }
+
 }

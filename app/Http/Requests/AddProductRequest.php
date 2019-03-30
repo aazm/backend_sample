@@ -26,7 +26,7 @@ class AddProductRequest extends FormRequest
     {
         return [
             'product_id' => ['required', 'numeric', new ProductRule()],
-            'attributes' => 'string|max:1000',
+            'attributes' => 'required|string|max:1000',
             'quantity' => 'required|numeric|min:1',
             'buy_now' => 'required|boolean',
         ];

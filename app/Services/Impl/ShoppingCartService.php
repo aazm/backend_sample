@@ -57,8 +57,4 @@ class ShoppingCartService implements ShoppingCartServiceInterface
         }
     }
 
-    public function processPayedCard(string $card): bool
-    {
-        // TODO: Implement processPayedCard() method.
-    }
 }

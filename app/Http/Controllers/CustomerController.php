@@ -17,7 +17,7 @@ class CustomerController extends Controller
 
             return response()->json([
                 'success' => true,
-                'profile' => resolve(CustomerServiceInterface::class)->getById(Auth::id())
+                'customer' => resolve(CustomerServiceInterface::class)->getById(Auth::id())
             ]);
 
         } catch (\Throwable $e) {
@@ -33,7 +33,7 @@ class CustomerController extends Controller
 
             return response()->json([
                 'success' => true,
-                'profile' => resolve(CustomerServiceInterface::class)
+                'customer' => resolve(CustomerServiceInterface::class)
                     ->update(Auth::id(), $request->all())
 
             ]);
