@@ -4,11 +4,11 @@ use Illuminate\Database\Seeder;
 
 class StressTestSeeder extends Seeder
 {
-    const DEPARTMENTS_CNT = 50;
-    const CATEGORIES_IN_DEP_CNT = 10;
+    const DEPARTMENTS_CNT = 10;
+    const CATEGORIES_IN_DEP_CNT = 100;
 
     const PRODUCTS_CNT = 100000;
-    const PRODUCT_IN_CATS = 20;
+    const PRODUCT_IN_CATS = 10;
 
     /**
      * Run the database seeds.
@@ -29,37 +29,19 @@ class StressTestSeeder extends Seeder
 
     private function seedProducts(\Illuminate\Support\Collection $collection)
     {
-        $offset = 0;
         for($i = 0 ; $i < self::PRODUCTS_CNT; $i++) {
 
             $product = factory(\Turing\Models\Product::class)->create();
+            $collection = $collection->shuffle();
+
+            $slice = $collection->slice(0, self::PRODUCT_IN_CATS);
 
             $pairs = [];
-
-            $collection->shuffle();
-            $offset = 0;
-            foreach ($collection->slice($offset, self::PRODUCT_IN_CATS) as $category) {
-
+            foreach ($slice as $category) {
                 $pairs[] = sprintf('(%d, %d)', $product->getKey(), $category->getKey());
-
-                //todo: understand why generates an error
-                /*
-                \Turing\ProductCategory::create([
-                   'product_id' => $product->getKey(),
-                   'category_id' => $category->getKey()
-                ]);*/
             }
-
-            // looks like working solution
-            DB::insert("INSERT INTO product_category (product_id, category_id) values ".implode(',', $pairs));
-
-            if($offset == self::PRODUCT_IN_CATS - $collection->count()) {
-                $collection->shuffle();
-                $offset = 0;
-            } else  {
-                $offset += self::PRODUCT_IN_CATS;
-            }
-
+            $sql = "INSERT INTO product_category (product_id, category_id) values ".implode(',', $pairs);
+            DB::insert($sql);
         }
     }
 
