@@ -18,6 +18,8 @@ use Turing\Services\ProductServiceInterface;
 
 class ProductService implements ProductServiceInterface
 {
+    CONST PLACEHODER_VALS_MAX = 1000;
+
     /**
      * @inheritdoc
      */
@@ -33,7 +35,7 @@ class ProductService implements ProductServiceInterface
 
         $builder = $product->newModelQuery();
         $builder->orderBy($product->getKeyName());
-        $builder->whereIn($product->getKeyName(), $ids->toArray());
+        $builder->whereIn($product->getKeyName(), $ids->splice($offset, self::PLACEHODER_VALS_MAX));
         $builder->take(config('turing.items_per_page'));
         $builder->skip($offset);
 
