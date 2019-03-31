@@ -54,11 +54,11 @@ class ProductService implements ProductServiceInterface
             ->orderBy('product.product_id', 'asc');
 
         if(isset($criteria['name'])) {
-            $builder->where('name', 'like', $criteria['name'].'%');
+            $builder->where('product.name', 'like', $criteria['name'].'%');
         }
 
         if(isset($criteria['description'])) {
-            $builder->where('description', 'like', '%' . $criteria['description'] . '%');
+            $builder->where('product.description', 'like', '%' . $criteria['description'] . '%');
         }
 
         if(isset($criteria['category']) || isset($criteria['department'])) {
