@@ -26,9 +26,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ShoppingCartServiceInterface::class, ShoppingCartService::class);
 
 
-        $this->app->extend(ProductServiceInterface::class, function($service){
+/*        $this->app->extend(ProductServiceInterface::class, function($service){
             return new CachingProductServiceDecorator($service);
-        });
+        });*/
 
 
     }

@@ -10,6 +10,7 @@ namespace Turing\Services\Impl;
 
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Turing\Helpers\DataSet;
 use Turing\Helpers\EmptyDataSet;
 use Turing\Models\Category;
@@ -19,7 +20,8 @@ use Turing\Services\ProductServiceInterface;
 
 class ProductService implements ProductServiceInterface
 {
-    CONST PLACEHODER_VALS_MAX = 1000;
+    //todo: think about this approach
+    CONST PLACEHODER_VALS_MAX = 65500;
 
     /**
      * @inheritdoc
@@ -36,9 +38,12 @@ class ProductService implements ProductServiceInterface
 
         $builder = $product->newModelQuery();
         $builder->orderBy($product->getKeyName());
-        $builder->whereIn($product->getKeyName(), $ids->splice($offset, self::PLACEHODER_VALS_MAX));
+        $builder->whereIn($product->getKeyName(), $ids->slice(0, self::PLACEHODER_VALS_MAX));
+
         $builder->take(config('turing.items_per_page'));
         $builder->skip($offset);
+
+        Log::warning($builder->toSql());
 
         $dataSet = (new DataSet())
             ->setTotal($ids->count())
