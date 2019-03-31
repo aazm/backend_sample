@@ -9,6 +9,7 @@
 namespace Turing\Services\Impl;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Turing\Helpers\DataSet;
 use Turing\Helpers\EmptyDataSet;
 use Turing\Models\Category;
@@ -47,6 +48,36 @@ class ProductService implements ProductServiceInterface
     }
 
     private function getQuery(array $criteria)
+    {
+        $builder = DB::table('product')
+            ->select('product.product_id')
+            ->orderBy('product.product_id', 'asc');
+
+        if(isset($criteria['name'])) {
+            $builder->where('name', 'like', $criteria['name'].'%');
+        }
+
+        if(isset($criteria['description'])) {
+            $builder->where('description', 'like', '%' . $criteria['description'] . '%');
+        }
+
+        if(isset($criteria['category']) || isset($criteria['department'])) {
+            $builder->join('product_category', 'product.product_id', '=', 'product_category.product_id');
+            $builder->join('category', 'category.category_id', '=', 'product_category.category_id');
+
+            if(isset($criteria['category'])) {
+                $builder->where('category.category_id', $criteria['category']);
+            }
+
+            if(isset($criteria['department'])) {
+                $builder->where('category.department_id', $criteria['department']);
+            }
+        }
+
+        return $builder;
+    }
+
+    private function getQuerySlow(array $criteria)
     {
         $product = new Product();
 
