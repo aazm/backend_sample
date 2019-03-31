@@ -37,7 +37,7 @@ namespace :deploy do
     after :updated, :build do
         on roles(:app) do
             within release_path  do
-                execute :composer, "install --no-dev --quiet" # install dependencies
+                execute :composer, "install --quiet" # install dependencies
                 execute :chmod, "u+x artisan" # make artisan executable
             end
         end
@@ -65,13 +65,11 @@ namespace :deploy do
     after :updated, "composer:install"
     after :updated, "laravel:upload_config"
     after :updated, "laravel:copy_config"
-    after :updated, "laravel:update_js_version"
     after :published, "laravel:optimize"
     after :published, "laravel:migrate"
 
     after :published, "laravel:symlink"
     after :published, "laravel:reset_chmod"
-    after :published, "laravel:cp_missing"
     after :published, "laravel:up"
 
 end
@@ -163,7 +161,7 @@ namespace :laravel do
         on roles(:app), in: :sequence, wait: 5 do
             within release_path do
                 execute :sudo, "chmod g+rwX -R /var/www"
-                execute :sudo, "chown ubuntu:www -R /var/www"
+                execute :sudo, "chown deploy:www -R /var/www"
              end
         end
     end
@@ -203,15 +201,6 @@ namespace :laravel do
                 execute :cp, "./public/assets/*svg", "./public/"
                 execute :cp, "-R ./public/assets/fonts", "./public/"
 
-            end
-        end
-    end
-
-    desc "Update js version"
-    task :update_js_version do
-        on roles(:app), in: :sequence, wait: 5 do
-            within release_path do
-                execute :php, "artisan viza:js_version"
             end
         end
     end

@@ -13,7 +13,7 @@ namespace :laravel do
   desc 'Copy non-git ENV specific files to servers.'
   task :upload_config do
     on roles(:app), in: :sequence, wait: 1 do
-      upload! './config/deploy/envs/mcs.env', "#{deploy_to}/shared/.env"
+      upload! './config/deploy/envs/turing.env', "#{deploy_to}/shared/.env"
     end
   end
 
@@ -23,13 +23,6 @@ namespace :laravel do
         execute "cp #{deploy_to}/shared/.env #{release_path}/.env"
     end
  end
-
-    desc "untar assets"
-    task :untar_assets do
-        on roles(:app), in: :sequence, wait: 1 do
-            execute :tar, "-xzf  /home/ubuntu/assets.tar.gz -C /var/www/production/current/"
-        end
-    end
 
 
 desc 'maintenance mode for production'
@@ -42,9 +35,3 @@ desc 'maintenance mode for production'
  end
 end
 
-namespace :deploy do
-        after :published, "laravel:tar_assets"
-        after :published, "laravel:upload_tarball"
-        after :published, "laravel:untar_assets"
-        after :published, "laravel:duplicate_assets"
-end
