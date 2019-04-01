@@ -1,71 +1,76 @@
-<p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
+Turing backend challenge quick overview.
+============
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://poser.pugx.org/laravel/framework/license.svg" alt="License"></a>
-</p>
+Hello, guys from Turing. 
+I had some free time on the previous week, so, I had a chance to spend it on this project.
+> I've spent 23 hours on it. 
 
-## About Laravel
+## What's done?
+First of all I've focused myself on checking DB structure. 
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+I've found that it's using MyISAM tables and have no constraints, foreign keys, etc.
+So, first of all I've focused myself on fixing this issues. 
+Results can be found in general_cleanup migration.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+**General features:**
+- Registration
+- Authentication
+  - Login
+  - Refresh token
+  - Logout
+- Products
+  - Filtering by Department, Category
+  - Searching by Product name, description
+  - Offset quering - items_per_page is defined in turing config file. 
+- Customer 
+  - Profile show
+  - Profile update
+- Shopping cart add product
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Project Stack
+- Laravel 5.8
+- JWT
+- CORS 
+- Mysql
+- Redis 
+- Capistrano
+- Stackify
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Resources and links
+1. Stackify access. I'll send credentials via Google Hangouts to mr. Khuong Nguyen.
+2. I had no enough time to do my best with documenting API, but I've used POSTMAN to test it, so, it has feature
+which allow you to publish requests description in readable format. 
+[Collection link](https://vitrinazaimov.postman.co/collections/5767740-860de05d-0c26-4e10-8a5c-da67496305ec?workspace=20d59130-c49e-49e8-914a-8635950c4f06#a53e1385-0996-456d-8d2e-34a7c3a8e0f1)
+3. Code is deployed on http://185.205.210.3
+3. Api is accessable on http://185.205.210.3/api
+4. It's hosted on https://www.vps.ag/lightkvm (cheap vm)
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1100 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost you and your team's skills by digging into our comprehensive video library.
 
-## Laravel Sponsors
+## Advanced requirements
+**Designing system which can support 1.000.000 daily active users.**
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+From my point of view everything almost ready for that. 
+To support such number of users\request there should be:
+- Load balancer (such as HAProxy) should be setup and configured and placed in front. 
+- Several backend server instances. Sessions should not be attached to concrete server (I'm using JWT for that purposes) 
+- Can be replicated to separate reads and writes load. Laravel supports read\write connections. 
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[British Software Development](https://www.britishsoftware.co)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- [UserInsights](https://userinsights.com)
-- [Fragrantica](https://www.fragrantica.com)
-- [SOFTonSOFA](https://softonsofa.com/)
-- [User10](https://user10.com)
-- [Soumettre.fr](https://soumettre.fr/)
-- [CodeBrisk](https://codebrisk.com)
-- [1Forge](https://1forge.com)
-- [TECPRESSO](https://tecpresso.co.jp/)
-- [Runtime Converter](http://runtimeconverter.com/)
-- [WebL'Agence](https://weblagence.com/)
-- [Invoice Ninja](https://www.invoiceninja.com)
-- [iMi digital](https://www.imi-digital.de/)
-- [Earthlink](https://www.earthlink.ro/)
-- [Steadfast Collective](https://steadfastcollective.com/)
-- [We Are The Robots Inc.](https://watr.mx/)
-- [Understand.io](https://www.understand.io/)
-- [Abdel Elrafa](https://abdelelrafa.com)
+**A half of the daily active users comes from United States.**
+ - In this case you def need to place part of your servers in US.
+ - Use DNS for routing to your servers based on your client region
+ - You can create several DB instances for writing and use hash function based on client's data to calculate db instance or caching server. 
 
-## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Work log
+- Tuesday - 1:45 on writing database migrations
+- Wednesday - 2:20 writing products search
+- Tuesday  - 2:40 products search
+- Friday - 4:10 authentication, registration, customer update; 0:45 - project scope clarification; 2:40 writing tests
+- Sartuday - 1:15 tests and comments, 1:00 stress test seeder
+- Sunday - 1:30 setting up deploy + apm, 2:25 - fixing bugs, seeder, etc
+- Monday - 2:45 read.me, postman, final testing. 
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
 
-## License
 
-The Laravel framework is open-source software licensed under the [MIT license](https://opensource.org/licenses/MIT).
