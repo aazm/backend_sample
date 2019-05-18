@@ -71,11 +71,6 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * blablalba
-     *
-     * @inheritdoc
-     */
     protected function registered(Request $request, $user)
     {
         /** @var \Tymon\JWTAuth\JWTGuard $guard */

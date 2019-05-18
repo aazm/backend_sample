@@ -15,14 +15,8 @@ class User extends Authenticatable implements JWTSubject
 
     public $timestamps = false;
 
-    /**
-     * @inheritdoc
-     */
     protected $table = 'customer';
 
-    /**
-     * @inheritdoc
-     */
     protected $primaryKey = 'customer_id';
 
     /**
