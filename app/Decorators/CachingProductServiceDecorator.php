@@ -20,7 +20,7 @@ class CachingProductServiceDecorator implements ProductServiceInterface
 {
     private $service;
 
-    public function __construct(ProductService $service)
+    public function __construct(ProductServiceInterface $service)
     {
         $this->service = $service;
     }

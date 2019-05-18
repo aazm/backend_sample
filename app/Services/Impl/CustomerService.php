@@ -18,9 +18,9 @@ class CustomerService implements CustomerServiceInterface
     /**
      * @inheritdoc
      */
-    public function getById(int $id): User
+    public function getById(int $id): ?User
     {
-        return User::findOrFail($id);
+        return User::find($id);
     }
 
     public function update(int $id, array $params): User
@@ -30,6 +30,7 @@ class CustomerService implements CustomerServiceInterface
             DB::beginTransaction();
 
             $user = $this->getById($id);
+
             $user->update($params);
 
             DB::commit();

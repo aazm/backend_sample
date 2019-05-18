@@ -176,7 +176,7 @@ return [
         Turing\Providers\EventServiceProvider::class,
         Turing\Providers\TelescopeServiceProvider::class,
         Turing\Providers\RouteServiceProvider::class,
-
+        Appointer\Swaggervel\SwaggervelServiceProvider::class
     ],
 
     /*

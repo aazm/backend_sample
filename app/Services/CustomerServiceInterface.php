@@ -22,7 +22,7 @@ interface CustomerServiceInterface
      * @param int $id
      * @return User
      */
-    public function getById(int $id): User;
+    public function getById(int $id): ?User;
 
     /**
      * Update User object by given id

@@ -82,42 +82,6 @@ class ProductService implements ProductServiceInterface
         return $builder;
     }
 
-    private function getQuerySlow(array $criteria)
-    {
-        $product = new Product();
-
-        $builder = $product->newModelQuery();
-        $builder->select($product->getKeyName());
-
-        if(isset($criteria['name'])) {
-            $builder->where('name', 'like', $criteria['name'].'%');
-        }
-
-        if(isset($criteria['description'])) {
-            $builder->where('description', 'like', '%' . $criteria['description'] . '%');
-        }
-
-        if(isset($criteria['category']) || isset($criteria['department'])) {
-
-            $builder->whereHas('categories', function ($query) use ($criteria) {
-
-                if(isset($criteria['category'])) {
-                    $query->where('category.category_id', $criteria['category']);
-                }
-
-                if(isset($criteria['department'])) {
-                    $query->where('category.department_id', $criteria['department']);
-                }
-
-            });
-
-        }
-
-        $builder->orderBy($product->getKeyName());
-
-        return $builder;
-    }
-
     /**
      * @inheritdoc
      */
