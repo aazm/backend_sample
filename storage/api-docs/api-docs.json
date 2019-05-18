@@ -1,0 +1,41 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Turing BACKEND challenge",
+        "description": "Turing BACKEND challenge API description",
+        "contact": {
+            "name": "Alexey Borovkov",
+            "email": "lucky.aaz@gmail.com"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/customer": {
+            "get": {
+                "summary": "Show logged in customer info",
+                "operationId": "Turing\\Http\\Controllers\\CustomerController::show",
+                "responses": {
+                    "200": {
+                        "description": "Result data"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Category": {
+                "title": "Category",
+                "properties": {
+                    "": {
+                        "schema": "Category",
+                        "title": "category_id",
+                        "description": "blablabla",
+                        "format": "integer"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
